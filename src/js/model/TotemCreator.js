@@ -12,24 +12,31 @@ export default class TotemCreator {
 
   create() {
       const game = this.game;
-      this.createBox(this.width / 2, this.height - 20, this.width, 40, false, blockTypes.TERRAIN, 0x049b15);
-      this.createBox(this.width / 2 - 60, this.height - 60, 40, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(this.width / 2 + 60, this.height - 60, 40, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(this.width / 2, this.height - 100, 160, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(this.width / 2, this.height - 140, 80, 40, true, blockTypes.UNBREAKABLE, 0x3b3b3b);
-      this.createBox(this.width / 2 - 20, this.height - 180, 120, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(this.width / 2, this.height - 240, 160, 80, true, blockTypes.UNBREAKABLE, 0x3b3b3b);
-      const idol = this.createBox(this.width / 2, this.height - 320, 40, 80, true, blockTypes.IDOL, 0xfff43a);
+
+      const totemModel = {
+          posX: this.width / 2,
+          posY: this.height - 20,
+          width: this.width,
+          height: 40,
+          blockType: blockTypes.TERRAIN,
+      }
+      this.createBox(this.width / 2, this.height - 20, this.width, 40,  blockTypes.TERRAIN);
+      this.createBox(this.width / 2 - 60, this.height - 60, 40, 40, blockTypes.BREAKABLE);
+      this.createBox(this.width / 2 + 60, this.height - 60, 40, 40, blockTypes.BREAKABLE);
+      this.createBox(this.width / 2, this.height - 100, 160, 40, blockTypes.BREAKABLE);
+      this.createBox(this.width / 2, this.height - 140, 80, 40, blockTypes.UNBREAKABLE);
+      this.createBox(this.width / 2 - 20, this.height - 180, 120, 40, blockTypes.BREAKABLE);
+      this.createBox(this.width / 2, this.height - 240, 160, 80, blockTypes.UNBREAKABLE);
+      const idol = this.createBox(this.width / 2, this.height - 320, 40, 80, blockTypes.IDOL);
       return idol;
   }
 
   // totem block creation
-  createBox(posX, posY, width, height, isDynamic, blockType, color) {
+  createBox(posX, posY, width, height, blockType) {
 
       // this is how we create a generic Box2D body
       let box = this.world.createBody();
-      if (isDynamic) {
-
+      if (blockType != blockTypes.TERRAIN) {
           // Box2D bodies born as static bodies, but we can make them dynamic
           box.setDynamic();
       }
@@ -51,14 +58,14 @@ export default class TotemCreator {
       });
 
       // now we create a graphics object representing the body
-      let borderColor = Phaser.Display.Color.IntegerToColor(color);
+      let borderColor = Phaser.Display.Color.IntegerToColor(blockType.color);
       borderColor.darken(20);
 
       let userData = {
           blockType: blockType,
           sprite: this.createGraphics()
       }
-      userData.sprite.fillStyle(color);
+      userData.sprite.fillStyle(blockType.color);
       userData.sprite.fillRect(- width / 2, - height / 2, width, height);
       userData.sprite.lineStyle(4, borderColor.color)
       userData.sprite.strokeRect(- width / 2 + 2, - height / 2 + 2, width - 4, height - 4);

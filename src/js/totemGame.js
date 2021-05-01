@@ -1,7 +1,7 @@
 // From https://www.emanueleferonato.com/2021/03/13/build-a-html5-game-like-old-flash-glory-totem-destroyer-using-phaser-and-planck-js-physics-engine/
 
-import TotemCreator from "./TotemCreator.js"
-import blockTypes from "./blockTypes.js"
+import TotemCreator from "./model/TotemCreator.js"
+import blockTypes from "./model/blockTypes.js"
 
 let game;
 
@@ -42,7 +42,8 @@ class playGame extends Phaser.Scene {
         this.world = planck.World(gravity);
 
         // totem creation
-        const creator = new TotemCreator(this.world, game, gameOptions, () => this.add.graphics());
+        const creator = new TotemCreator(this.world,
+            game.config.width, game.config.height, gameOptions.worldScale, () => this.add.graphics());
         this.idol = creator.create();
 
 
