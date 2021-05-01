@@ -2,23 +2,24 @@ import blockTypes from "./blockTypes.js"
 
 export default class TotemCreator {
 
-  constructor(world, game, gameOptions, createGraphics) {
+  constructor(world, width, height, worldScale, createGraphics) {
     this.world = world;
-    this.game = game;
-    this.gameOptions = gameOptions;
+    this.width = width;
+    this.height = height;
+    this.worldScale = worldScale;
     this.createGraphics = createGraphics;
   }
 
   create() {
       const game = this.game;
-      this.createBox(game.config.width / 2, game.config.height - 20, game.config.width, 40, false, blockTypes.TERRAIN, 0x049b15);
-      this.createBox(game.config.width / 2 - 60, game.config.height - 60, 40, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(game.config.width / 2 + 60, game.config.height - 60, 40, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(game.config.width / 2, game.config.height - 100, 160, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(game.config.width / 2, game.config.height - 140, 80, 40, true, blockTypes.UNBREAKABLE, 0x3b3b3b);
-      this.createBox(game.config.width / 2 - 20, game.config.height - 180, 120, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
-      this.createBox(game.config.width / 2, game.config.height - 240, 160, 80, true, blockTypes.UNBREAKABLE, 0x3b3b3b);
-      const idol = this.createBox(game.config.width / 2, game.config.height - 320, 40, 80, true, blockTypes.IDOL, 0xfff43a);
+      this.createBox(this.width / 2, this.height - 20, this.width, 40, false, blockTypes.TERRAIN, 0x049b15);
+      this.createBox(this.width / 2 - 60, this.height - 60, 40, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
+      this.createBox(this.width / 2 + 60, this.height - 60, 40, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
+      this.createBox(this.width / 2, this.height - 100, 160, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
+      this.createBox(this.width / 2, this.height - 140, 80, 40, true, blockTypes.UNBREAKABLE, 0x3b3b3b);
+      this.createBox(this.width / 2 - 20, this.height - 180, 120, 40, true, blockTypes.BREAKABLE, 0x6e5d42);
+      this.createBox(this.width / 2, this.height - 240, 160, 80, true, blockTypes.UNBREAKABLE, 0x3b3b3b);
+      const idol = this.createBox(this.width / 2, this.height - 320, 40, 80, true, blockTypes.IDOL, 0xfff43a);
       return idol;
   }
 
@@ -34,7 +35,7 @@ export default class TotemCreator {
       }
 
       // a body can have one or more fixtures. This is how we create a box fixture inside a body
-      const worldScale = this.gameOptions.worldScale;
+      const worldScale = this.worldScale;
       box.createFixture(planck.Box(width / 2 / worldScale, height / 2 / worldScale));
 
       // now we place the body in the world
