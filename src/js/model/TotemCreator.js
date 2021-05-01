@@ -11,26 +11,60 @@ export default class TotemCreator {
   }
 
   create() {
-      const game = this.game;
+    const game = this.game;
 
-      const totemModel = {
-          posX: this.width / 2,
-          posY: this.height - 20,
-          width: this.width,
-          height: 40,
-          blockType: blockTypes.TERRAIN,
+    const totemModel = {
+      name: "Example Totem",
+      blocks: [
+        {
+          xOffset: -60, yOffset: 60,
+          width: 40, height: 40,
+          blockType: blockTypes.BREAKABLE,
+        },
+        {
+          xOffset: 60, yOffset: 60,
+          width: 40, height: 40,
+          blockType: blockTypes.BREAKABLE,
+        },
+        {
+          xOffset: 0, yOffset: 100,
+          width: 160, height: 40,
+          blockType: blockTypes.BREAKABLE,
+        },
+        {
+          xOffset: 0, yOffset: 140,
+          width: 80, height: 40,
+          blockType: blockTypes.UNBREAKABLE,
+        },
+        {
+          xOffset: -20, yOffset: 180,
+          width: 120, height: 40,
+          blockType: blockTypes.BREAKABLE,
+        },
+        {
+          xOffset: 0, yOffset: 240,
+          width: 160, height: 80,
+          blockType: blockTypes.UNBREAKABLE,
+        },
+      ],
+      idol: {
+        xOffset: 0, yOffset: 320,
+        width: 40, height: 80,
+        blockType: blockTypes.IDOL,
       }
-      this.createBox(this.width / 2, this.height - 20, this.width, 40,  blockTypes.TERRAIN);
-      this.createBox(this.width / 2 - 60, this.height - 60, 40, 40, blockTypes.BREAKABLE);
-      this.createBox(this.width / 2 + 60, this.height - 60, 40, 40, blockTypes.BREAKABLE);
-      this.createBox(this.width / 2, this.height - 100, 160, 40, blockTypes.BREAKABLE);
-      this.createBox(this.width / 2, this.height - 140, 80, 40, blockTypes.UNBREAKABLE);
-      this.createBox(this.width / 2 - 20, this.height - 180, 120, 40, blockTypes.BREAKABLE);
-      this.createBox(this.width / 2, this.height - 240, 160, 80, blockTypes.UNBREAKABLE);
-      const idol = this.createBox(this.width / 2, this.height - 320, 40, 80, blockTypes.IDOL);
-      return idol;
+    }
+
+
+    this.createBox(this.width / 2, this.height - 20, this.width, 40,  blockTypes.TERRAIN);
+
+    totemModel.blocks.forEach(blockDef => this.createBoxFromDef(blockDef));
+
+    return this.createBoxFromDef(totemModel.idol);
   }
 
+  createBoxFromDef(def) {
+      return this.createBox(this.width / 2 + def.xOffset, this.height - def.yOffset, def.width, def.height, def.blockType)
+  }
   // totem block creation
   createBox(posX, posY, width, height, blockType) {
 
