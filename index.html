@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <style type = "text/css">
-            body{
-                background: #000000;
-                padding: 0px;
-                margin: 0px;
-            }
-        </style>
-        <script src = "node_modules/planck-js/dist/planck.min.js"></script>
-        <script src = "node_modules/phaser/dist/phaser.min.js"></script>
-        <script type="module" src = "src/js/totemGame.js"></script>
+        <link rel="stylesheet" href="src/css/styles.css">
+
+        <script src="node_modules/planck-js/dist/planck.min.js"></script>
+        <script src="node_modules/phaser/dist/phaser.min.js"></script>
+        <script type="module" src="src/js/totemGame.js"></script>
     </head>
     <body>
+        <div id="UI" class="ui-controls">
+            <span>Select a totem puzzle: </span>
+            <select id="totemSelector">
+                <option value="totem1">Easy</option>
+                <option selected value="totem2">Hard</option>
+            </select>
+            <button id="restartButton">Restart</button>
+        </div>
         <div id = "thegame"></div>
     </body>
 </html>

@@ -3,18 +3,38 @@
 
 import TotemCreator from "./model/TotemCreator.js"
 import blockTypes from "./model/blockTypes.js"
+import gameOptions from "./gameOptions.js"
 
 let game;
-
-let gameOptions = {
-    // conversion unit from pixels to meters. 30 pixels = 1 meter
-    worldScale: 30
-}
+let selectedTotem;
 
 window.onload = function() {
+    const totemSelector = getTotemSelector();
+    totemSelector.onchange = totemSelectionChanged;
+
+    const restartButton = document.getElementById("restartButton");
+    restartButton.onclick = totemSelectionChanged;
+
+    totemSelectionChanged();
+}
+
+function getTotemSelector() {
+    return document.getElementById("totemSelector");
+}
+
+function totemSelectionChanged() {
+    if (game) {
+        game.destroy(true);
+    }
+    const totemSelector = getTotemSelector();
+    selectedTotem = totemSelector.options[ totemSelector.selectedIndex ].value;
+    initializePhaser();
+}
+
+function initializePhaser(selectedTotem) {
     let gameConfig = {
         type: Phaser.AUTO,
-        backgroundColor:0x9ad9ff,
+        backgroundColor: gameOptions.backgroundColor,
         scale: {
             mode: Phaser.Scale.FIT,
             autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -36,12 +56,12 @@ class playGame extends Phaser.Scene {
     }
 
     preload() {
-       this.load.tilemapTiledJSON("totem", "src/assets/totem2.json");
+       this.load.tilemapTiledJSON("totem", "src/assets/" + selectedTotem + ".json");
     }
 
     create() {
 
-        let gravity = planck.Vec2(0, 3);
+        let gravity = planck.Vec2(0, gameOptions.gravity);
 
         // this is how we create a Box2D world
         this.world = planck.World(gravity);
