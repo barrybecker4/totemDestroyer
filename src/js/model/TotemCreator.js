@@ -10,56 +10,26 @@ export default class TotemCreator {
     this.createGraphics = createGraphics;
   }
 
-  create() {
-    const game = this.game;
+  create(blocks) {
+      this.createBox(this.width / 2, this.height - 20, this.width, 40,  blockTypes.TERRAIN);
 
-    const totemModel = {
-      name: "Example Totem",
-      blocks: [
-        {
-          xOffset: -60, yOffset: 60,
-          width: 40, height: 40,
-          blockType: blockTypes.BREAKABLE,
-        },
-        {
-          xOffset: 60, yOffset: 60,
-          width: 40, height: 40,
-          blockType: blockTypes.BREAKABLE,
-        },
-        {
-          xOffset: 0, yOffset: 100,
-          width: 160, height: 40,
-          blockType: blockTypes.BREAKABLE,
-        },
-        {
-          xOffset: 0, yOffset: 140,
-          width: 80, height: 40,
-          blockType: blockTypes.UNBREAKABLE,
-        },
-        {
-          xOffset: -20, yOffset: 180,
-          width: 120, height: 40,
-          blockType: blockTypes.BREAKABLE,
-        },
-        {
-          xOffset: 0, yOffset: 240,
-          width: 160, height: 80,
-          blockType: blockTypes.UNBREAKABLE,
-        },
-      ],
-      idol: {
-        xOffset: 0, yOffset: 320,
-        width: 40, height: 80,
-        blockType: blockTypes.IDOL,
+      blocks.forEach(block => this.addBlock(block)); // switch to  blocks.forEach(this.addBlock)
+      return this.idol;
+  }
+
+  addBlock(block) {
+
+      // we store block coordinates inside a Phaser Rectangle just to get its center
+      let rectangle = new Phaser.Geom.Rectangle(block.x, block.y, block.width, block.height);
+
+      // create the Box2D block with old createBox method
+      let box2DBlock = this.createBox(rectangle.centerX, rectangle.centerY, block.width, block.height, blockTypes[block.type]);
+
+      // is this block the idol?
+      if (block.type == "IDOL") {
+          // assign it to idol variable
+          this.idol = box2DBlock;
       }
-    }
-
-
-    this.createBox(this.width / 2, this.height - 20, this.width, 40,  blockTypes.TERRAIN);
-
-    totemModel.blocks.forEach(blockDef => this.createBoxFromDef(blockDef));
-
-    return this.createBoxFromDef(totemModel.idol);
   }
 
   createBoxFromDef(def) {
@@ -70,7 +40,7 @@ export default class TotemCreator {
 
       // this is how we create a generic Box2D body
       let box = this.world.createBody();
-      if (blockType != blockTypes.TERRAIN) {
+      if (blockType.isDynamic) {
           // Box2D bodies born as static bodies, but we can make them dynamic
           box.setDynamic();
       }

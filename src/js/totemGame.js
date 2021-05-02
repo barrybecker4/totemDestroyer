@@ -1,4 +1,5 @@
-// From https://www.emanueleferonato.com/2021/03/13/build-a-html5-game-like-old-flash-glory-totem-destroyer-using-phaser-and-planck-js-physics-engine/
+// Derived from
+// https://www.emanueleferonato.com/2021/03/13/build-a-html5-game-like-old-flash-glory-totem-destroyer-using-phaser-and-planck-js-physics-engine/
 
 import TotemCreator from "./model/TotemCreator.js"
 import blockTypes from "./model/blockTypes.js"
@@ -6,7 +7,6 @@ import blockTypes from "./model/blockTypes.js"
 let game;
 
 let gameOptions = {
-
     // conversion unit from pixels to meters. 30 pixels = 1 meter
     worldScale: 30
 }
@@ -19,8 +19,8 @@ window.onload = function() {
             mode: Phaser.Scale.FIT,
             autoCenter: Phaser.Scale.CENTER_BOTH,
             parent: "thegame",
-            width: 600,
-            height: 400
+            width: 800,
+            height: 600
         },
         scene: playGame
     }
@@ -30,26 +30,31 @@ window.onload = function() {
 
 
 class playGame extends Phaser.Scene {
+
     constructor() {
         super("PlayGame");
     }
+
+    preload() {
+       this.load.tilemapTiledJSON("totem1", "src/assets/totem1.json");
+    }
+
     create() {
 
-        // world gravity, as a Vec2 object. It's just a x, y vector
         let gravity = planck.Vec2(0, 3);
 
         // this is how we create a Box2D world
         this.world = planck.World(gravity);
 
-        // totem creation
         const creator = new TotemCreator(this.world,
             game.config.width, game.config.height, gameOptions.worldScale, () => this.add.graphics());
-        this.idol = creator.create();
 
+        // totem creation
+        const map = this.add.tilemap("totem1");
+        const blocks = map.objects[0].objects;
+        this.idol = creator.create(blocks);
 
-        // input listener to call destroyBlock method
         this.input.on("pointerdown", this.destroyBlock, this);
-
     }
 
     // method to destroy a block
