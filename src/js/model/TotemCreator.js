@@ -13,35 +13,28 @@ export default class TotemCreator {
   create(blocks) {
       this.createBox(this.width / 2, this.height - 20, this.width, 40,  blockTypes.TERRAIN);
 
-      blocks.forEach(block => this.addBlock(block)); // switch to  blocks.forEach(this.addBlock)
+      blocks.forEach(block => this.addBlock(block));
       return this.idol;
   }
 
   addBlock(block) {
 
-      // we store block coordinates inside a Phaser Rectangle just to get its center
+      // Store block coordinates inside a Phaser Rectangle just to get its center
       let rectangle = new Phaser.Geom.Rectangle(block.x, block.y, block.width, block.height);
 
-      // create the Box2D block with old createBox method
       let box2DBlock = this.createBox(rectangle.centerX, rectangle.centerY, block.width, block.height, blockTypes[block.type]);
 
-      // is this block the idol?
       if (block.type == "IDOL") {
-          // assign it to idol variable
           this.idol = box2DBlock;
       }
   }
 
-  createBoxFromDef(def) {
-      return this.createBox(this.width / 2 + def.xOffset, this.height - def.yOffset, def.width, def.height, def.blockType)
-  }
   // totem block creation
   createBox(posX, posY, width, height, blockType) {
 
       // this is how we create a generic Box2D body
       let box = this.world.createBody();
       if (blockType.isDynamic) {
-          // Box2D bodies born as static bodies, but we can make them dynamic
           box.setDynamic();
       }
 
@@ -55,10 +48,7 @@ export default class TotemCreator {
       // time to set mass information
       box.setMassData({
           mass: 1,
-          center: planck.Vec2(),
-
-          // I have to say I do not know the meaning of this "I", but if you set it to zero, bodies won't rotate
-          I: 1
+          center: planck.Vec2()
       });
 
       // now we create a graphics object representing the body
