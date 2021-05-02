@@ -48,7 +48,9 @@ export default class TotemCreator {
       // time to set mass information
       box.setMassData({
           mass: 1,
-          center: planck.Vec2()
+          center: planck.Vec2(),
+          // do not know the meaning of this "I", but if you set it to zero, bodies won't rotate
+          I: 1
       });
 
       // now we create a graphics object representing the body

@@ -36,7 +36,7 @@ class playGame extends Phaser.Scene {
     }
 
     preload() {
-       this.load.tilemapTiledJSON("totem1", "src/assets/totem1.json");
+       this.load.tilemapTiledJSON("totem", "src/assets/totem2.json");
     }
 
     create() {
@@ -50,7 +50,7 @@ class playGame extends Phaser.Scene {
             game.config.width, game.config.height, gameOptions.worldScale, () => this.add.graphics());
 
         // totem creation
-        const map = this.add.tilemap("totem1");
+        const map = this.add.tilemap("totem");
         const blocks = map.objects[0].objects;
         this.idol = creator.create(blocks);
 
