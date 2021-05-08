@@ -7,15 +7,18 @@
         <script src="node_modules/phaser/dist/phaser.min.js"></script>
         <script type="module" src="src/js/totemGame.js"></script>
     </head>
+
     <body>
         <div id="UI" class="ui-controls">
             <span>Select a totem puzzle: </span>
             <select id="totemSelector">
                 <option value="totem1">Easy</option>
                 <option selected value="totem2">Hard</option>
+                <option selected value="totem3">Complex</option>
             </select>
             <button id="restartButton">Restart</button>
         </div>
-        <div id = "thegame"></div>
+        <div id = "TotemDestroyerGame"></div>
     </body>
+
 </html>

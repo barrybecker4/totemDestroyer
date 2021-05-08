@@ -14,6 +14,7 @@ window.onload = function() {
 
     const restartButton = document.getElementById("restartButton");
     restartButton.onclick = totemSelectionChanged;
+    restartButton.ontouchend = totemSelectionChanged;
 
     totemSelectionChanged();
 }
@@ -38,18 +39,18 @@ function initializePhaser(selectedTotem) {
         scale: {
             mode: Phaser.Scale.FIT,
             autoCenter: Phaser.Scale.CENTER_BOTH,
-            parent: "thegame",
+            parent: "TotemDestroyerGame",
             width: 800,
             height: 600
         },
-        scene: playGame
+        scene: PlayGame
     }
     game = new Phaser.Game(gameConfig);
     window.focus();
 }
 
 
-class playGame extends Phaser.Scene {
+class PlayGame extends Phaser.Scene {
 
     constructor() {
         super("PlayGame");
