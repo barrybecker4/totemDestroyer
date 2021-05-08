@@ -14,7 +14,7 @@ window.onload = function() {
 
     const restartButton = document.getElementById("restartButton");
     restartButton.onclick = totemSelectionChanged;
-    restartButton.ontouchend = totemSelectionChanged;
+    restartButton.ontouchstart = totemSelectionChanged;
 
     totemSelectionChanged();
 }

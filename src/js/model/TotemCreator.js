@@ -11,7 +11,7 @@ export default class TotemCreator {
   }
 
   create(blocks) {
-      this.createBox(this.width / 2, this.height - 0, this.width, 40,  blockTypes.TERRAIN);
+      this.createBox(this.width / 2, this.height + 10, this.width, 40,  blockTypes.TERRAIN);
 
       blocks.forEach(block => this.addBlock(block));
       return this.idol;
