@@ -64,7 +64,7 @@ export default class TotemCreator {
       userData.sprite.fillStyle(blockType.color);
       userData.sprite.fillRect(- width / 2, - height / 2, width, height);
       userData.sprite.lineStyle(4, borderColor.color)
-      userData.sprite.strokeRect(- width / 2 + 2, - height / 2 + 2, width - 4, height - 4);
+      userData.sprite.strokeRect(-width / 2 + 2, -height / 2 + 2, width - 4, height - 4);
 
       // a body can have anything in its user data, normally it's used to store its sprite
       box.setUserData(userData);
